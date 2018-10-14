@@ -15,3 +15,6 @@ development:
 
 test:
   path: https://sleepy-reef-89338.herokuapp.com
+
+SENDGRID_USERNAME: app111175782@heroku.com
+SENDGRID_PASSWORD: gfyfc0hj4545
