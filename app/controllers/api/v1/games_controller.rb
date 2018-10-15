@@ -12,8 +12,6 @@ module Api
       def create
         player_1_board = Board.new(4)
         player_2_board = Board.new(4)
-        sm_ship = Ship.new(2)
-        md_ship = Ship.new(3)
         current_turn = "player_1"
 
 
@@ -25,7 +23,7 @@ module Api
           current_turn: "player_1"
        }
        game = Game.create(game_attributes)
-       render json: game 
+       render json: game
       end
     end
   end
