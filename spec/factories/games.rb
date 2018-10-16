@@ -5,6 +5,6 @@ FactoryBot.define do
     winner nil
     player_1_turns 0
     player_2_turns 0
-    current_turn "challenger"
+    current_turn "player_1"
   end
 end
