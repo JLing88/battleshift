@@ -14,5 +14,6 @@ class Game < ApplicationRecord
     else
       self.player_2_ship_spots += ship_length
     end
+    self.save
   end
 end

@@ -37,7 +37,7 @@ describe 'GET /api/v1/games/1' do
                       player_2_board: player_2_board,
                       player_1_turns: 0,
                       player_2_turns: 0,
-                      current_turn: "challenger"
+                      current_turn: "player_1"
                     }
 
       game = Game.new(game_attributes)

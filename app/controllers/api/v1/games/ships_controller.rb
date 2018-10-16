@@ -23,19 +23,21 @@ module Api
           end
           game.increment_ship_spots(ship.length)
 
-          if game.player_1_ship_spots == 2 || 3
-            ship_left = 1
-          elsif game.player_2_ship_spots == 2 || 3
-            ship_left = 1
+          ship_left =
+
+          if game.player_1_ship_spots == 2 ||  game.player_1_ship_spots == 3
+            message = "Successfully placed ship with a size of #{ship.length}. You have 1 ship(s) to place with a size of #{5 - ship.length}."
+          elsif game.player_2_ship_spots == 2 ||  game.player_2_ship_spots == 3
+            message = "Successfully placed ship with a size of #{ship.length}. You have 1 ship(s) to place with a size of #{5 - ship.length}."
           else
-            ship_left = 0
+            message =  "Successfully placed ship with a size of #{ship.length}. You have 0 ship(s) to place."
           end
 
-          if ship_left == 0
-            message =  "Successfully placed ship with a size of #{ship.length}. You have #{ship_left} ship(s) to place."
-          else
-            message = "Successfully placed ship with a size of #{ship.length}. You have #{ship_left} ship(s) to place with a size of #{5 - ship.length}."
-          end
+          # if ship_left == 0
+          #   message =  "Successfully placed ship with a size of #{ship.length}. You have #{ship_left} ship(s) to place."
+          # else
+          #   message = "Successfully placed ship with a size of #{ship.length}. You have #{ship_left} ship(s) to place with a size of #{5 - ship.length}."
+          # end
 
           render json: game, message: message
         end
