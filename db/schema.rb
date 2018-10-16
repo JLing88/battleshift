@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181015212046) do
+ActiveRecord::Schema.define(version: 20181016220940) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,8 @@ ActiveRecord::Schema.define(version: 20181015212046) do
     t.datetime "updated_at", null: false
     t.integer "player_1_ship_spots", default: 0
     t.integer "player_2_ship_spots", default: 0
+    t.integer "player_1_id"
+    t.integer "player_2_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -40,4 +42,6 @@ ActiveRecord::Schema.define(version: 20181015212046) do
     t.string "api_key"
   end
 
+  add_foreign_key "games", "users", column: "player_1_id"
+  add_foreign_key "games", "users", column: "player_2_id"
 end

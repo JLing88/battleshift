@@ -7,7 +7,7 @@ module Api
           ship = Ship.new(params[:ship_size])
 
           game = Game.find(params[:game_id].to_i)
-          if game.current_turn == "player_1"
+          if request.headers["HTTP_X_API_KEY"] == game.player_1_api_key
             ShipPlacer.new(
               board: game.player_1_board,
               ship: ship,
@@ -23,7 +23,7 @@ module Api
           end
           game.increment_ship_spots(ship.length)
 
-          ship_left =
+
 
           if game.player_1_ship_spots == 2 ||  game.player_1_ship_spots == 3
             message = "Successfully placed ship with a size of #{ship.length}. You have 1 ship(s) to place with a size of #{5 - ship.length}."
@@ -33,11 +33,7 @@ module Api
             message =  "Successfully placed ship with a size of #{ship.length}. You have 0 ship(s) to place."
           end
 
-          # if ship_left == 0
-          #   message =  "Successfully placed ship with a size of #{ship.length}. You have #{ship_left} ship(s) to place."
-          # else
-          #   message = "Successfully placed ship with a size of #{ship.length}. You have #{ship_left} ship(s) to place with a size of #{5 - ship.length}."
-          # end
+          game.save
 
           render json: game, message: message
         end

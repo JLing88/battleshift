@@ -6,5 +6,7 @@ FactoryBot.define do
     player_1_turns 0
     player_2_turns 0
     current_turn "player_1"
+    player_1_id 1
+    player_2_id 1
   end
 end

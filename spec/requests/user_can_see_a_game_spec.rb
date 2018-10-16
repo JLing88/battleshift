@@ -31,13 +31,15 @@ describe 'GET /api/v1/games/1' do
                      start_space: "B1",
                      end_space: "D1"
                     ).run
-
+user = create :user
       game_attributes = {
                       player_1_board: player_1_board,
                       player_2_board: player_2_board,
                       player_1_turns: 0,
                       player_2_turns: 0,
-                      current_turn: "player_1"
+                      current_turn: "player_1",
+                      player_1_id: user.id,
+                      player_2_id: user.id
                     }
 
       game = Game.new(game_attributes)
