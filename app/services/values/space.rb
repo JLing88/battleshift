@@ -28,4 +28,3 @@ class Space
     status == "Not Attacked"
   end
 end
-
