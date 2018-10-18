@@ -6,7 +6,6 @@ class TurnProcessor
     @target = target
     @messages = []
     @status = 200
-    # @message = {}
     @board = find_opponent_board
   end
 
@@ -38,11 +37,19 @@ class TurnProcessor
 
   attr_reader :game, :target
 
+  def ship_sunk?
+    @board.board.flatten.pluck(target).compact[0].contents.is_sunk?
+  end
+
   def attack_opponent
     result = Shooter.fire!(board: @board, target: target)
     @messages << "Your shot resulted in a #{result}."
     toggle_current_turn
     game.save!
+
+    if result == "Hit" && ship_sunk?
+      @messages << "Battleship sunk."
+    end
   end
 
   def toggle_current_turn
@@ -68,5 +75,6 @@ class TurnProcessor
   def opponent
     Player.new(game.player_2_board)
   end
+
 
 end
