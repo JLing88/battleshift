@@ -11,10 +11,10 @@ class Game < ApplicationRecord
   validates :player_1_board, presence: true
   validates :player_2_board, presence: true
 
-  def increment_ship_spots(ship_length)
-    if self.current_turn == "player_1"
+  def increment_ship_spots(ship_length, player)
+    if player.id == self.player_1_id
       self.player_1_ship_spots += ship_length
-    else
+    elsif player.id == self.player_2_id
       self.player_2_ship_spots += ship_length
     end
     self.save

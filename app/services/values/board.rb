@@ -203,4 +203,3 @@ class Board
     get_column(coordinate) == "1"
   end
 end
-

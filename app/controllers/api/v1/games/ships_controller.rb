@@ -5,25 +5,22 @@ module Api
 
         def create
           ship = Ship.new(params[:ship_size])
-
+          user = User.find_by(api_key: request.headers["HTTP_X_API_KEY"])
           game = Game.find(params[:game_id].to_i)
-          if request.headers["HTTP_X_API_KEY"] == game.player_1_api_key
-            ShipPlacer.new(
-              board: game.player_1_board,
-              ship: ship,
-              start_space: params[:start_space],
-              end_space: params[:end_space]).run
 
+          if user.id == game.player_1_id
+            board = game.player_1_board
           else
-            ShipPlacer.new(
-                board: game.player_2_board,
-                ship: ship,
-                start_space: params[:start_space],
-                end_space: params[:end_space]).run
+            board = game.player_2_board
           end
-          game.increment_ship_spots(ship.length)
 
+          ShipPlacer.new(
+          board: board,
+          ship: ship,
+          start_space: params[:start_space],
+          end_space: params[:end_space]).run
 
+          game.increment_ship_spots(ship.length, user)
 
           if game.player_1_ship_spots == 2 ||  game.player_1_ship_spots == 3
             message = "Successfully placed ship with a size of #{ship.length}. You have 1 ship(s) to place with a size of #{5 - ship.length}."
