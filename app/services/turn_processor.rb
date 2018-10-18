@@ -43,13 +43,18 @@ class TurnProcessor
 
   def attack_opponent
     result = Shooter.fire!(board: @board, target: target)
+    @board.hits += 1 if result == "Hit"
     @messages << "Your shot resulted in a #{result}."
-    toggle_current_turn
-    game.save!
+
 
     if result == "Hit" && ship_sunk?
       @messages << "Battleship sunk."
+      if @board.hits == 5
+        @messages << "Game over."
+      end
     end
+    toggle_current_turn
+    game.save!
   end
 
   def toggle_current_turn
