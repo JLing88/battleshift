@@ -51,10 +51,19 @@ class TurnProcessor
       @messages << "Battleship sunk."
       if @board.hits == 5
         @messages << "Game over."
+        @game.update_attribute(:winner, winner)
       end
     end
     toggle_current_turn
-    game.save!
+    @game.save!
+  end
+
+  def winner
+    if @game[:current_turn] == 'player_1'
+      User.find(@game.player_1_id).email
+    elsif @game[:current_turn] == 'player_2'
+      User.find(@game.player_2_id).email
+    end
   end
 
   def toggle_current_turn

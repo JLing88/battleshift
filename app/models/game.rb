@@ -19,4 +19,6 @@ class Game < ApplicationRecord
     end
     self.save
   end
+
+
 end
