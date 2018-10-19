@@ -2,9 +2,11 @@ module Api
   module V1
     module Games
       class ShotsController < ApiController
+        # before_action :valid_api_key?
+        before_action :game_over?
+
         def create
           @game = Game.find(params[:game_id])
-
           if valid_turn?
             turn_processor = TurnProcessor.new(@game, params[:shot][:target])
             turn_processor.run!
@@ -30,6 +32,24 @@ module Api
           def request_player
             User.find_by(api_key: request.headers["HTTP_X_API_KEY"])
           end
+
+          def game_over?
+            @game = Game.find(params[:game_id])
+            if @game[:game_over]
+              render json: @game, message: "Invalid move. Game over.", status: 400
+            end
+          end
+
+          # def valid_api_key?
+          #   game = Game.find(params[:game_id])
+          #   api_key = response.headers["HTTP_X_API_KEY"]
+          #   player_1 = User.find(game.player_1_id)
+          #   player_2 = User.find(game.player_2_id)
+          #   binding.pry
+          #   if api_key != player_1.api_key || api_key != player_2.api_key
+          #     render json: @game, message: "Unauthorized", status: 401
+          #   end
+          # end
       end
     end
   end
